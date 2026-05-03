@@ -5,7 +5,7 @@ const TWEAK_DEFAULTS_SHARED = /*EDITMODE-BEGIN*/{
   "accent": "bordeaux"
 }/*EDITMODE-END*/;
 
-const ACCENTS_SITE = {
+var ACCENTS_SITE = {
   bordeaux: { c: "#7A1F2B", c2: "#a93341", deep: "#4d1119", name: "Bordeaux" },
   ink:      { c: "#1E3A8A", c2: "#3d62b5", deep: "#0f1d44", name: "Tinte" },
   graphite: { c: "#3a4554", c2: "#5b6878", deep: "#1f2937", name: "Graphit" },
@@ -13,8 +13,8 @@ const ACCENTS_SITE = {
   amber:    { c: "#B8602B", c2: "#d18244", deep: "#5c3015", name: "Bernstein" },
 };
 
-const VERVE_DOWNLOAD_URL = "https://vervewriter.de/downloads/Verve-latest.dmg";
-const VERVE_DOWNLOAD_EVENT_URL = "";
+var VERVE_DOWNLOAD_URL = "https://vervewriter.de/downloads/Verve-latest.dmg";
+var VERVE_DOWNLOAD_EVENT_URL = "";
 
 function applyTheme(tweaks) {
   document.documentElement.setAttribute("data-theme", tweaks.theme);
