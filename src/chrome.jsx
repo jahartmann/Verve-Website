@@ -13,12 +13,47 @@ const ACCENTS_SITE = {
   amber:    { c: "#B8602B", c2: "#d18244", deep: "#5c3015", name: "Bernstein" },
 };
 
+const VERVE_DOWNLOAD_URL = "https://vervewriter.de/downloads/Verve-latest.dmg";
+const VERVE_DOWNLOAD_EVENT_URL = "";
+
 function applyTheme(tweaks) {
   document.documentElement.setAttribute("data-theme", tweaks.theme);
   const a = ACCENTS_SITE[tweaks.accent] || ACCENTS_SITE.bordeaux;
   document.documentElement.style.setProperty("--accent", a.c);
   document.documentElement.style.setProperty("--accent-2", a.c2);
   document.documentElement.style.setProperty("--accent-deep", a.deep);
+}
+
+function trackVerveDownload(source) {
+  if (typeof window.plausible === "function") {
+    window.plausible("Download", { props: { item: "Verve-latest.dmg", source } });
+  }
+
+  if (window.umami && typeof window.umami.track === "function") {
+    window.umami.track("Download", { item: "Verve-latest.dmg", source });
+  }
+
+  if (!VERVE_DOWNLOAD_EVENT_URL) return;
+
+  const payload = JSON.stringify({
+    event: "download",
+    item: "Verve-latest.dmg",
+    source,
+    path: window.location.pathname,
+    at: new Date().toISOString(),
+  });
+
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(VERVE_DOWNLOAD_EVENT_URL, new Blob([payload], { type: "application/json" }));
+    return;
+  }
+
+  fetch(VERVE_DOWNLOAD_EVENT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: payload,
+    keepalive: true,
+  }).catch(() => {});
 }
 
 function SiteNav({ active }) {
@@ -33,12 +68,13 @@ function SiteNav({ active }) {
         <a href="index.html" className="brand">
           <span className="brand-mark">V</span>
           <span>Verve</span>
+          <span className="brand-beta">Beta</span>
         </a>
         <div className="snav-links">
           {links.map(l => (
             <a key={l.href} href={l.href} className={active === l.href ? "snav-link snav-link-active" : "snav-link"}>{l.label}</a>
           ))}
-          <a href="https://vervewriter.de/downloads/Verve-latest.dmg" className="snav-cta" download>
+          <a href={VERVE_DOWNLOAD_URL} className="snav-cta" download onClick={() => trackVerveDownload("nav")}>
             <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M8 1.5v9m0 0L4.5 7M8 10.5L11.5 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 13.5h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
             Laden
           </a>
@@ -70,6 +106,22 @@ function SiteNav({ active }) {
           font-weight: 600;
           font-size: 16px;
           box-shadow: 0 0 0 0.5px rgba(255,255,255,0.12), 0 6px 18px -4px rgba(0,0,0,0.4);
+        }
+        .brand-beta {
+          display: inline-flex;
+          align-items: center;
+          height: 19px;
+          padding: 0 8px;
+          border: 0.5px solid color-mix(in srgb, var(--accent) 55%, var(--rule-strong));
+          border-radius: 999px;
+          color: var(--accent);
+          background: color-mix(in srgb, var(--accent) 9%, transparent);
+          font-family: var(--mono);
+          font-size: 9.5px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          text-transform: uppercase;
         }
         .snav-links { display: flex; gap: 28px; align-items: center; font-size: 13.5px; }
         .snav-link { color: var(--ink-dim); transition: color 0.2s; }
@@ -109,7 +161,7 @@ function SiteFooter() {
             <a href="features.html">Funktionen</a>
             <a href="ki.html">KI</a>
             <a href="datenschutz.html">Datenschutz</a>
-            <a href="https://vervewriter.de/downloads/Verve-latest.dmg" download>Download</a>
+            <a href={VERVE_DOWNLOAD_URL} download onClick={() => trackVerveDownload("footer")}>Download</a>
           </div>
           <div>
             <div className="foot-label">Rechtliches</div>
@@ -211,4 +263,4 @@ function FeatureCard({ eyebrow, title, sub, route, focusMode = false, hideInspec
   );
 }
 
-Object.assign(window, { TWEAK_DEFAULTS_SHARED, ACCENTS_SITE, applyTheme, SiteNav, SiteFooter, FeatureCard });
+Object.assign(window, { TWEAK_DEFAULTS_SHARED, ACCENTS_SITE, VERVE_DOWNLOAD_URL, VERVE_DOWNLOAD_EVENT_URL, applyTheme, trackVerveDownload, SiteNav, SiteFooter, FeatureCard });

@@ -38,14 +38,15 @@ function IndexPage() {
         <span className="eyebrow eyebrow-line">Für Autoren · macOS</span>
         <h1>Eine Werkstatt<br/>für <em>lange</em> Texte.</h1>
         <p className="lede">Beim Schreiben eines Romans verliert man irgendwann den Überblick. Wer trug noch mal welche Jacke, in welchem Kapitel kam die Schwester vor, wann genau war der Brand im Hafen. Verve merkt sich das, während du schreibst, und liegt im Hintergrund, falls du nachschauen willst.</p>
+        <p className="hero-origin">Ich bin selbst Autor und baue Verve aus meiner eigenen Schreibpraxis heraus: als Werkzeug, das hilft, ein großes Werk zusammenzuhalten, ohne Figuren, Orte und Notizen überall doppelt zu pflegen. Deshalb ist Verve noch Beta und wächst mit echten Schreibsituationen weiter.</p>
         <div className="hero-cta">
-          <a href="https://vervewriter.de/downloads/Verve-latest.dmg" className="btn-primary" download>
+          <a href={VERVE_DOWNLOAD_URL} className="btn-primary" download onClick={() => trackVerveDownload("hero")}>
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1.5v9m0 0L4.5 7M8 10.5L11.5 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 13.5h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
-            Verve für macOS herunterladen
+            Kostenlos herunterladen
           </a>
           <a href="features.html" className="btn-ghost">Funktionen ansehen →</a>
         </div>
-        <div className="hero-dlnote">Für Apple Silicon</div>
+        <div className="hero-dlnote">Beta · Für Apple Silicon · während der Vorabphase kostenlos</div>
       </div>
     </section>
 
@@ -136,13 +137,15 @@ function IndexPage() {
         <h2 className="dl-title">Probier es aus.</h2>
         <p className="dl-sub">Lädst du dir Verve runter, schreibst ein Kapitel und schaust, wie sich das anfühlt. Wenn dir die App nicht passt, ziehst du sie in den Papierkorb. Es gibt kein Konto, das dir danach noch E-Mails schickt.</p>
         <div className="dl-buttons">
-          <a href="https://vervewriter.de/downloads/Verve-latest.dmg" className="btn-primary" download>
+          <a href={VERVE_DOWNLOAD_URL} className="btn-primary" download onClick={() => trackVerveDownload("download-section")}>
             <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.182 0c.06.024.12.048.179.072 1.4.555 2.484 1.535 3.252 2.94.144.264.27.535.378.812.024.06.048.12.072.18-.06.024-.12.048-.18.072a4.55 4.55 0 0 0-2.79 4.176c0 1.296.504 2.448 1.512 3.456.252.252.516.48.792.684-.024.06-.048.12-.072.18-.42.84-.96 1.62-1.62 2.34-.42.456-.864.876-1.332 1.26-.42.348-.876.612-1.368.792-.48.18-.972.252-1.476.216-.48-.036-.948-.144-1.404-.324-.456-.18-.912-.36-1.368-.54-.336-.132-.672-.18-1.008-.144-.336.036-.66.132-.972.288-.456.228-.924.408-1.404.54-.456.132-.924.18-1.404.144a3.42 3.42 0 0 1-1.404-.396 4.55 4.55 0 0 1-1.224-.972C.84 14.928.36 14.292 0 13.572c-.36-.72-.612-1.476-.756-2.268-.144-.792-.18-1.584-.108-2.376.072-.792.252-1.56.54-2.304.288-.744.672-1.428 1.152-2.052.48-.624 1.044-1.164 1.692-1.62.648-.456 1.356-.792 2.124-1.008.768-.216 1.56-.288 2.376-.216.816.072 1.608.288 2.376.648.312.144.612.252.9.324.288.072.576.108.864.108.288 0 .576-.036.864-.108.288-.072.588-.18.9-.324.408-.18.84-.324 1.296-.432.456-.108.924-.144 1.404-.108.48.036.96.144 1.44.324.48.18.948.432 1.404.756.48.336.912.732 1.296 1.188 0 .024-.024.048-.024.072-.96.504-1.776 1.224-2.448 2.16-.672.936-1.008 1.992-1.008 3.168z"/></svg>
-            <span>Verve für macOS herunterladen</span>
+            <span>Kostenlos herunterladen</span>
           </a>
         </div>
         <div className="dl-meta">
+          <div>Beta-Version</div>
           <div>Für Apple Silicon</div>
+          <div>Während der Vorabphase kostenlos · spätere Version voraussichtlich kostenpflichtig</div>
         </div>
       </div>
     </section>
@@ -174,7 +177,14 @@ function IndexPage() {
         line-height: 1.5;
         color: var(--ink-dim);
         max-width: 60ch;
-        margin: 0 auto 36px;
+        margin: 0 auto 18px;
+      }
+      .hero-origin {
+        max-width: 66ch;
+        margin: 0 auto 34px;
+        color: var(--ink-dim);
+        font-size: 15px;
+        line-height: 1.6;
       }
       .hero-cta { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
       .hero-dlnote {

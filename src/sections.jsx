@@ -625,24 +625,20 @@ function Download() {
         <div className="dl-card">
           <div className="dl-glow" />
           <div className="dl-content">
-            <span className="eyebrow eyebrow-line">Verve · v1.0</span>
+            <span className="eyebrow eyebrow-line">Verve · Beta</span>
             <h2 className="dl-title">
               Setz dich hin.<br/>
               <em>Schreib deinen Roman.</em>
             </h2>
             <p className="dl-sub">
-              Universal Binary für Apple Silicon &amp; Intel. Notarisiert. Kostenlos. Ohne Account.
+              Vorabversion für Apple Silicon &amp; Intel. Während der Beta-Phase kostenlos. Ohne Account.
             </p>
 
             <div className="dl-actions">
-              <a href="https://github.com/jahartmann/Verve/releases" className="btn btn-primary btn-large">
+              <a href={VERVE_DOWNLOAD_URL} className="btn btn-primary btn-large" download onClick={() => trackVerveDownload("legacy-download-section")}>
                 <DownloadGlyph />
-                Verve.dmg laden
+                Kostenlos herunterladen
                 <span className="btn-meta">~24 MB</span>
-              </a>
-              <a href="https://github.com/jahartmann/Verve" className="btn btn-ghost btn-large">
-                <GitHubGlyph />
-                Auf GitHub ansehen
               </a>
             </div>
 
