@@ -58,6 +58,7 @@ function trackVerveDownload(source) {
 
 function SiteNav({ active }) {
   const links = [
+    { href: "warum-verve.html", label: "Warum Verve" },
     { href: "features.html", label: "Funktionen" },
     { href: "ki.html", label: "KI" },
     { href: "datenschutz.html", label: "Datenschutz" },
@@ -159,6 +160,7 @@ function SiteFooter() {
           <div>
             <div className="foot-label">Produkt</div>
             <a href="features.html">Funktionen</a>
+            <a href="warum-verve.html">Warum Verve</a>
             <a href="ki.html">KI</a>
             <a href="datenschutz.html">Datenschutz</a>
             <a href={VERVE_DOWNLOAD_URL} download onClick={() => trackVerveDownload("footer")}>Download</a>
