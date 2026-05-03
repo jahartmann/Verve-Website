@@ -131,7 +131,7 @@ function Features() {
             </div>
 
             <div className="feat-frame" style={{ height: 800 * scale }}>
-              <div className="feat-frame-inner" style={{ transform: `scale(${scale})` }}>
+              <div className="feat-frame-inner" style={{ transform: `translateX(-50%) scale(${scale})` }}>
                 <VerveApp route={f.route} dark={true} accent="bordeaux" />
               </div>
             </div>
@@ -275,7 +275,11 @@ function Features() {
           border-radius: 16px;
         }
         .feat-frame-inner {
-          transform-origin: top left;
+          position: absolute;
+          top: 0;
+          left: 50%;
+          height: 800px;
+          transform-origin: top center;
           width: 1280px;
         }
       `}</style>

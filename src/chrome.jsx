@@ -204,7 +204,7 @@ function FeatureCard({ eyebrow, title, sub, route, focusMode = false, hideInspec
     function update() {
       const el = wrapRef.current;
       if (!el) return;
-      setScale(Math.min(1, (el.clientWidth - 32) / 1280));
+      setScale(Math.max(0.18, Math.min(1, (el.clientWidth - 32) / 1280)));
     }
     update();
     window.addEventListener("resize", update);
@@ -220,8 +220,10 @@ function FeatureCard({ eyebrow, title, sub, route, focusMode = false, hideInspec
         {children && <div className="fcard-extra">{children}</div>}
       </header>
       <div className="fcard-shot" ref={wrapRef}>
-        <div className="fcard-shot-inner" style={{ transform: `scale(${scale})`, height: 800 * scale }}>
-          <VerveApp route={route} focusMode={focusMode} hideInspector={hideInspector} dark={dark} accent={accent} />
+        <div className="fcard-shot-frame" style={{ height: 800 * scale }}>
+          <div className="fcard-shot-inner" style={{ transform: `translateX(-50%) scale(${scale})` }}>
+            <VerveApp route={route} focusMode={focusMode} hideInspector={hideInspector} dark={dark} accent={accent} />
+          </div>
         </div>
       </div>
       <style>{`
@@ -255,9 +257,17 @@ function FeatureCard({ eyebrow, title, sub, route, focusMode = false, hideInspec
           margin: 0 auto;
           padding: 0 16px;
         }
+        .fcard-shot-frame {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+        }
         .fcard-shot-inner {
+          position: absolute;
+          top: 0;
+          left: 50%;
           width: 1280px;
-          margin: 0 auto;
+          height: 800px;
           transform-origin: top center;
         }
       `}</style>

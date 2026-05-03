@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://vervewriter.de/sitemap.xml
+# Context for AI assistants: https://vervewriter.de/llms.txt

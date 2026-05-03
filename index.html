@@ -45,6 +45,44 @@
         "priceCurrency": "EUR",
         "availability": "https://schema.org/InStock"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://vervewriter.de/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Was ist Verve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verve ist eine macOS-Schreibsoftware fuer Autoren, die lange Texte, Romanmanuskripte, Figuren, Orte, Plot und Werk-Wissen in einer lokalen Werkstatt zusammenhaelt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ist Verve kostenlos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verve ist waehrend der Beta- und Vorabphase kostenlos. Eine spaetere Version wird voraussichtlich kostenpflichtig."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Fuer wen ist Verve gedacht?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verve ist fuer Autoren und Romanautoren gedacht, die Manuskript, Figuren, Orte, Weltbau, Plot und Notizen nicht in vielen getrennten Dateien pflegen wollen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Laeuft Verve lokal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verve ist fuer lokale Schreibarbeit auf dem Mac gebaut. Es gibt keine Konto-Pflicht und keine Pflicht-Cloud."
+          }
+        }
+      ]
     }
   ]
 }
@@ -175,6 +213,32 @@ function IndexPage() {
       </a>
     </section>
 
+    {/* FAQ for search and AI answer surfaces */}
+    <section className="faq-section">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Kurz gefragt</span>
+        <h2>Was Verve ist.</h2>
+        <div className="faq-list">
+          <article>
+            <h3>Was ist Verve?</h3>
+            <p>Verve ist eine macOS-Schreibsoftware für Autoren, die lange Texte, Romanmanuskripte, Figuren, Orte, Plot und Werk-Wissen in einer lokalen Werkstatt zusammenhält.</p>
+          </article>
+          <article>
+            <h3>Ist Verve kostenlos?</h3>
+            <p>Verve ist während der Beta- und Vorabphase kostenlos. Eine spätere Version wird voraussichtlich kostenpflichtig.</p>
+          </article>
+          <article>
+            <h3>Für wen ist Verve gedacht?</h3>
+            <p>Für Autoren und Romanautoren, die Manuskript, Figuren, Orte, Weltbau, Plot und Notizen nicht in vielen getrennten Dateien pflegen wollen.</p>
+          </article>
+          <article>
+            <h3>Läuft Verve lokal?</h3>
+            <p>Verve ist für lokale Schreibarbeit auf dem Mac gebaut. Es gibt keine Konto-Pflicht und keine Pflicht-Cloud.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     {/* Download */}
     <section id="download" className="dl-section">
       <div className="container-narrow">
@@ -280,6 +344,44 @@ function IndexPage() {
       .trio-card p { font-size: 14px; color: var(--ink-dim); line-height: 1.5; flex: 1; }
       .trio-arrow { color: var(--accent); font-size: 13px; font-weight: 500; margin-top: 8px; }
 
+      .faq-section {
+        padding: 72px 0 88px;
+        border-top: 0.5px solid var(--rule);
+        border-bottom: 0.5px solid var(--rule);
+      }
+      .faq-section h2 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: clamp(34px, 4.5vw, 54px);
+        line-height: 1.06;
+        letter-spacing: -0.03em;
+        text-align: center;
+        margin: 18px 0 42px;
+      }
+      .faq-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 36px;
+      }
+      @media (max-width: 720px) { .faq-list { grid-template-columns: 1fr; } }
+      .faq-list article {
+        border-top: 0.5px solid var(--rule);
+        padding-top: 18px;
+      }
+      .faq-list h3 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: -0.015em;
+        margin: 0 0 10px;
+      }
+      .faq-list p {
+        color: var(--ink-dim);
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
       .dl-section {
         padding: 100px 0 80px;
         text-align: center;
@@ -323,7 +425,7 @@ function ScaledMockup({ route, hideInspector, dark, accent }) {
   React.useEffect(() => {
     function update() {
       const el = wrapRef.current; if (!el) return;
-      setScale(Math.min(1, (el.clientWidth - 32) / 1280));
+      setScale(Math.max(0.18, Math.min(1, (el.clientWidth - 32) / 1280)));
     }
     update();
     window.addEventListener("resize", update);
@@ -331,8 +433,10 @@ function ScaledMockup({ route, hideInspector, dark, accent }) {
   }, []);
   return (
     <div ref={wrapRef} style={{padding: "0 16px"}}>
-      <div style={{transform: `scale(${scale})`, height: 800 * scale, transformOrigin: "top center", width: 1280, margin: "0 auto"}}>
-        <VerveApp route={route} hideInspector={hideInspector} dark={dark} accent={accent} />
+      <div style={{position: "relative", height: 800 * scale, overflow: "hidden", width: "100%"}}>
+        <div style={{position: "absolute", left: "50%", top: 0, transform: `translateX(-50%) scale(${scale})`, transformOrigin: "top center", width: 1280, height: 800}}>
+          <VerveApp route={route} hideInspector={hideInspector} dark={dark} accent={accent} />
+        </div>
       </div>
     </div>
   );

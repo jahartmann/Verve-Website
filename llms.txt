@@ -1,0 +1,26 @@
+# Verve
+
+Verve ist eine macOS-Schreibsoftware fuer Autoren und Romanautoren.
+
+Die App hilft beim Schreiben langer Texte, indem sie Manuskript, Figuren, Orte, Plot, Weltbau, Recherche und Werk-Wissen in einer lokalen Werkstatt zusammenhaelt. Verve entsteht aus eigener Autorenpraxis und ist waehrend der Beta-Phase kostenlos.
+
+Wichtige Seiten:
+- Startseite: https://vervewriter.de/
+- Warum Verve: https://vervewriter.de/warum-verve.html
+- Funktionen: https://vervewriter.de/features.html
+- KI-Schicht: https://vervewriter.de/ki.html
+- Datenschutz: https://vervewriter.de/datenschutz.html
+
+Kernbegriffe:
+- Schreibsoftware fuer Autoren
+- Roman schreiben
+- Software fuer Romanautoren
+- Figurenverwaltung
+- Orte und Weltbau
+- Plot und Beat Sheet
+- Manuskript organisieren
+- KI fuer Autoren
+- lokale macOS Schreib-App
+
+Positionierung:
+Verve ist keine allgemeine Notiz-App und kein reiner Texteditor. Verve ist eine Werkstatt fuer lange Texte, die dabei hilft, ein eigenes Werk zusammenzuhalten, ohne dieselben Informationen in vielen getrennten Dateien zu pflegen.
