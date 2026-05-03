@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Verve · KI-Schicht</title>
+<link rel="stylesheet" href="styles/site.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/chrome.jsx"></script>
+<script type="text/babel" src="src/mockup-shell.jsx"></script>
+<script type="text/babel" src="src/mockup-routes.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-2.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-3.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "dark",
+  "accent": "bordeaux"
+}/*EDITMODE-END*/;
+
+function KIPage() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTheme(tweaks); }, [tweaks]);
+  const dark = tweaks.theme === "dark";
+  const accent = tweaks.accent;
+
+  return (<>
+    <SiteNav active="ki.html" />
+
+    <section className="page-hero">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">KI-Schicht</span>
+        <h1>Eine KI, die <em>dein</em><br/>Werk kennt.</h1>
+        <p className="lede">Verve liest mit. Sie merkt sich Figuren, Orte und den Bogen deines Romans — und hilft dort, wo Hilfe gut tut: bei Kontinuität, beim Brainstorming, beim Stellen der richtigen Fragen. Nicht beim Schreiben selbst. Das bleibt bei dir.</p>
+      </div>
+    </section>
+
+    <FeatureCard
+      eyebrow="Wissens-Chat"
+      title="Frage dein Werk."
+      sub={'\u201EWer hat den Brief im siebten Kapitel geschrieben — und gibt es Hinweise vorher?\u201C Verve durchsucht dein Werk und antwortet mit Belegstellen. Du klickst auf eine Belegstelle, sie öffnet sich im Editor.'}
+      route="chat"
+      dark={dark} accent={accent}
+    />
+
+    {/* What the AI does for you */}
+    <section className="kpr container-narrow">
+      <div className="kpr-grid">
+        <div>
+          <span className="eyebrow eyebrow-line">Was Verve für dich tut</span>
+          <h2 className="kpr-title">Eine Werkstatt-Hilfe,<br/>kein Co-Autor.</h2>
+        </div>
+        <div className="kpr-points">
+          <Point n="01" t="Werk-Gedächtnis">Verve hält Figuren, Orte, Zeitlinien und Magieregeln im Kopf, während du schreibst. Tippst du einen Namen, weiß sie, wer es ist, was er trägt und wo er zuletzt aufgetreten ist — ohne dass du den Tab wechseln musst.</Point>
+          <Point n="02" t="Kontinuität & Konsistenz">Augenfarbe in Kapitel 3, Mantel in Kapitel 7, ein Datum in Kapitel 11. Verve liest dein Werk mit und meldet still, wenn etwas nicht zusammenpasst. Du entscheidest, ob es ein Fehler ist oder Absicht.</Point>
+          <Point n="03" t="Brainstorm-Partner">Festgefahren in Akt II? Verve diskutiert mit dir — Was-wäre-wenn-Szenarien, alternative Motivationen, Plot-Sackgassen. Sie schlägt nichts vor, was du übernehmen sollst. Sie hilft dir, deine eigenen Ideen schärfer zu sehen.</Point>
+          <Point n="04" t="Fragen mit Belegen">„Wer hat den Brief geschrieben? Gibt es Hinweise vorher?“ Verve antwortet aus deinem Werk — mit Verweisen auf Kapitel und Absatz. Niemals halluziniert, immer zitiert.</Point>
+        </div>
+      </div>
+      <style>{`
+        .kpr { padding: 100px 0; }
+        .kpr-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start; }
+        @media (max-width: 720px) { .kpr-grid { grid-template-columns: 1fr; gap: 32px; } }
+        .kpr-title { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 4.5vw, 56px); line-height: 1.05; letter-spacing: -0.03em; margin-top: 18px; }
+        .kpr-points { display: flex; flex-direction: column; gap: 32px; }
+      `}</style>
+    </section>
+
+    {/* Bring your own model */}
+    <section className="byom container">
+      <div className="byom-head">
+        <span className="eyebrow eyebrow-line">Bring dein eigenes Modell</span>
+        <h2 className="byom-title">Du wählst. Verve übersetzt.</h2>
+        <p className="byom-sub">Verve schreibt dir kein Modell vor. Lokal über Ollama, oder jeder Cloud-Anbieter mit OpenAI-kompatibler API — du tippst Endpunkt und Schlüssel ein, Verve nutzt es. Heute, morgen und in zwei Jahren, wenn die Modelle wieder andere heißen.</p>
+      </div>
+
+      <div className="byom-grid">
+        <article className="byom-card">
+          <div className="byom-card-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="5" y="7" width="22" height="15" rx="2"/>
+              <path d="M11 22v3M21 22v3M9 25h14"/>
+              <circle cx="12" cy="14" r="1.2" fill="currentColor"/>
+              <circle cx="20" cy="14" r="1.2" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3>Lokal</h3>
+          <p>Über Ollama. Verve fragt nach einem Endpunkt — den Rest macht Ollama. Welches Modell du dort installierst, ist deine Sache.</p>
+          <div className="byom-tags">
+            <span>Ollama</span>
+            <span>jedes GGUF-Modell</span>
+          </div>
+        </article>
+
+        <article className="byom-card">
+          <div className="byom-card-icon">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 20a5 5 0 010-10 7 7 0 0114 0 5 5 0 010 10z"/>
+              <path d="M16 14v8M13 18l3 4 3-4"/>
+            </svg>
+          </div>
+          <h3>Cloud</h3>
+          <p>Anthropic, OpenAI oder jeder andere Anbieter mit OpenAI-kompatibler API. Endpunkt, Schlüssel, Modellname. Pro Werkzeug einstellbar.</p>
+          <div className="byom-tags">
+            <span>Anthropic</span>
+            <span>OpenAI</span>
+            <span>OpenAI-kompatibel</span>
+          </div>
+        </article>
+      </div>
+
+      <p className="byom-foot">Kein Lock-in. Wenn nächstes Jahr ein neues Modell erscheint, das deinem Schreibstil besser passt — du tippst eine neue URL ein. Verve bleibt gleich.</p>
+
+      <style>{`
+        .byom { padding: 60px 32px 100px; }
+        .byom-head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+        .byom-title { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 4.5vw, 52px); line-height: 1.08; letter-spacing: -0.03em; margin: 18px 0 16px; }
+        .byom-sub { font-family: var(--serif); font-weight: 300; font-size: 18px; color: var(--ink-dim); line-height: 1.55; }
+        .byom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 1000px; margin: 0 auto; }
+        @media (max-width: 720px) { .byom-grid { grid-template-columns: 1fr; } }
+        .byom-card {
+          padding: 36px 32px;
+          background: var(--surface);
+          border: 0.5px solid var(--rule);
+          border-radius: 16px;
+          display: flex; flex-direction: column; gap: 14px;
+        }
+        .byom-card-icon { color: var(--accent); }
+        .byom-card h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; letter-spacing: -0.02em; line-height: 1.1; }
+        .byom-card p { font-family: var(--serif); font-weight: 300; font-size: 16px; line-height: 1.55; color: var(--ink-dim); }
+        .byom-card code { font-family: var(--mono); font-size: 13px; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+        .byom-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+        .byom-tags span {
+          font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
+          padding: 4px 9px;
+          border: 0.5px solid var(--rule);
+          border-radius: 4px;
+          color: var(--ink-dim);
+        }
+        .byom-foot {
+          font-family: var(--serif); font-style: italic; font-size: 16px;
+          color: var(--ink-faint);
+          text-align: center;
+          max-width: 56ch;
+          margin: 40px auto 0;
+          line-height: 1.55;
+        }
+      `}</style>
+    </section>
+
+    {/* How it works */}
+    <SectionDivider eyebrow="Wie es funktioniert" title="Drei Schichten." />
+
+    <section className="layers container">
+      <Layer
+        n="1"
+        eyebrow="Indexierung"
+        title="Verve liest dein Werk — auf deinem Mac."
+        body="Beim ersten Öffnen baut Verve einen lokalen Index aus deinem Werk: Sätze, Figuren, Orte, Datierungen. Alles auf deiner Platte, verschlüsselt mit FileVault, niemals im Netz."
+      />
+      <Layer
+        n="2"
+        eyebrow="Kontext-Aufbau"
+        title="Nur die relevanten Stellen reisen mit."
+        body="Wenn du eine Frage stellst, sucht Verve im Index die Belegstellen, die wirklich helfen — meist eine Handvoll Absätze. Diese Stellen, und nur diese, gehen an das Modell deiner Wahl. Dein gesamtes Manuskript bleibt zuhause."
+      />
+      <Layer
+        n="3"
+        eyebrow="Antwort & Belege"
+        title="Jede Antwort kommt mit Quellen."
+        body="Verve halluziniert nicht. Wenn das Modell etwas behauptet, das nicht aus deinem Werk kommt, markiert Verve es. Jede Aussage wird mit Kapitel und Absatz belegt — du kannst sofort hinspringen."
+      />
+    </section>
+
+    {/* Honest section */}
+    <section className="honest container-narrow">
+      <span className="eyebrow eyebrow-line">Was Verve nicht tut</span>
+      <h2 className="honest-title">Ehrlich gesagt:</h2>
+      <ul className="honest-list">
+        <li><strong>Verve schreibt deinen Roman nicht für dich.</strong> Du wirst keinen Knopf finden, der Kapitel acht erzeugt. Das wäre nicht dein Buch mehr.</li>
+        <li><strong>Verve schlägt keinen Satz vor, den du übernehmen sollst.</strong> Wenn du nach einer Formulierung fragst, bekommst du Vorschläge — aber die Aufgabe ist, deinen Satz zu finden, nicht ihren zu kopieren.</li>
+        <li><strong>Verve verbessert deinen Stil nicht ohne Grund.</strong> Vorschläge kommen nur, wenn du danach fragst. Dann mit Begründung, sodass du widersprechen kannst.</li>
+        <li><strong>Verve ist kein Lektor.</strong> Sie erkennt Inkonsistenzen — aber sie erkennt nicht, ob deine Prämisse trägt. Das bleibt bei dir und einem Menschen.</li>
+      </ul>
+      <style>{`
+        .honest { padding: 100px 0; }
+        .honest-title { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 4.5vw, 52px); margin: 18px 0 32px; letter-spacing: -0.02em; }
+        .honest-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+        .honest-list li { font-family: var(--serif); font-weight: 300; font-size: 19px; line-height: 1.55; color: var(--ink-dim); padding-left: 24px; position: relative; }
+        .honest-list li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+        .honest-list strong { font-weight: 500; color: var(--ink); }
+      `}</style>
+    </section>
+
+    {/* CTA */}
+    <section className="dl-section">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Dein Text bleibt bei dir</span>
+        <h2 className="dl-title">Auch wenn du KI nutzt.</h2>
+        <p className="dl-sub">Lokal als Standard, Cloud als Wahl. Niemals umgekehrt.</p>
+        <div className="dl-buttons">
+          <a href="datenschutz.html" className="btn-primary">Datenschutz im Detail →</a>
+          <a href="index.html#download" className="btn-ghost">Verve laden</a>
+        </div>
+      </div>
+    </section>
+
+    <SiteFooter />
+
+    <TweaksPanel title="Tweaks">
+      <TweakSection title="Erscheinungsbild">
+        <TweakRadio label="Modus" value={tweaks.theme} options={[{value:"dark",label:"Dunkel"},{value:"light",label:"Hell"}]} onChange={v => setTweak("theme", v)} />
+        <TweakSelect label="Akzentfarbe" value={tweaks.accent} options={Object.entries(ACCENTS_SITE).map(([k,v]) => ({value:k,label:v.name}))} onChange={v => setTweak("accent", v)} />
+      </TweakSection>
+    </TweaksPanel>
+
+    <style>{`
+      .dl-section { padding: 100px 0 80px; text-align: center; border-top: 0.5px solid var(--rule); }
+      .dl-title { font-family: var(--serif); font-weight: 500; font-size: clamp(40px, 6vw, 68px); line-height: 1.05; letter-spacing: -0.03em; margin: 18px 0; }
+      .dl-sub { font-family: var(--serif); font-weight: 300; font-size: 19px; color: var(--ink-dim); max-width: 56ch; margin: 0 auto 36px; line-height: 1.5; }
+      .dl-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    `}</style>
+  </>);
+}
+
+function Point({ n, t, children }) {
+  return (
+    <div className="pt">
+      <div className="pt-n">{n}</div>
+      <div>
+        <div className="pt-t">{t}</div>
+        <div className="pt-b">{children}</div>
+      </div>
+      <style>{`
+        .pt { display: grid; grid-template-columns: 60px 1fr; gap: 18px; padding-bottom: 28px; border-bottom: 0.5px solid var(--rule); }
+        .pt-n { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: 0.1em; padding-top: 5px; }
+        .pt-t { font-family: var(--serif); font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: 8px; letter-spacing: -0.01em; }
+        .pt-b { font-family: var(--serif); font-weight: 300; font-size: 16.5px; line-height: 1.55; color: var(--ink-dim); }
+      `}</style>
+    </div>
+  );
+}
+
+function SectionDivider({ eyebrow, title }) {
+  return (
+    <section className="sect-div">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">{eyebrow}</span>
+        <h2>{title}</h2>
+      </div>
+      <style>{`
+        .sect-div { padding: 100px 0 24px; text-align: center; }
+        .sect-div h2 { font-family: var(--serif); font-weight: 500; font-size: clamp(40px, 6vw, 64px); line-height: 1.0; letter-spacing: -0.03em; margin-top: 18px; }
+      `}</style>
+    </section>
+  );
+}
+
+function Layer({ n, eyebrow, title, body }) {
+  return (
+    <article className="lay">
+      <div className="lay-n">{n}</div>
+      <div className="lay-body">
+        <span className="eyebrow">{eyebrow}</span>
+        <h3>{title}</h3>
+        <p>{body}</p>
+      </div>
+      <style>{`
+        .lay { display: grid; grid-template-columns: 100px 1fr; gap: 32px; padding: 48px 32px; border-top: 0.5px solid var(--rule); }
+        .lay:last-child { border-bottom: 0.5px solid var(--rule); }
+        .lay-n { font-family: var(--serif); font-style: italic; font-size: 88px; font-weight: 500; line-height: 1; color: var(--accent); letter-spacing: -0.04em; }
+        .lay-body h3 { font-family: var(--serif); font-weight: 500; font-size: 32px; line-height: 1.15; letter-spacing: -0.02em; margin: 10px 0 14px; max-width: 32ch; }
+        .lay-body p { font-family: var(--serif); font-weight: 300; font-size: 17px; color: var(--ink-dim); line-height: 1.55; max-width: 64ch; }
+        @media (max-width: 720px) { .lay { grid-template-columns: 1fr; gap: 12px; } .lay-n { font-size: 56px; } }
+      `}</style>
+    </article>
+  );
+}
+
+function waitAndMount() {
+  if (!window.VerveApp || !window.SiteNav || !window.RoutePlot || !window.useTweaks || !window.FeatureCard) {
+    return setTimeout(waitAndMount, 30);
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<KIPage />);
+}
+waitAndMount();
+</script>
+</body>
+</html>

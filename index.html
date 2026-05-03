@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Verve — Werkstatt für Autoren</title>
+<link rel="stylesheet" href="styles/site.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/chrome.jsx"></script>
+<script type="text/babel" src="src/mockup-shell.jsx"></script>
+<script type="text/babel" src="src/mockup-routes.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-2.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-3.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "dark",
+  "accent": "bordeaux"
+}/*EDITMODE-END*/;
+
+function IndexPage() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTheme(tweaks); }, [tweaks]);
+
+  return (<>
+    <SiteNav active="index.html" />
+
+    {/* Hero */}
+    <section className="hero">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Für Autoren · macOS</span>
+        <h1>Eine Werkstatt<br/>für <em>lange</em> Texte.</h1>
+        <p className="lede">Beim Schreiben eines Romans verliert man irgendwann den Überblick. Wer trug noch mal welche Jacke, in welchem Kapitel kam die Schwester vor, wann genau war der Brand im Hafen. Verve merkt sich das, während du schreibst, und liegt im Hintergrund, falls du nachschauen willst.</p>
+        <div className="hero-cta">
+          <a href="https://vervewriter.de/downloads/Verve-latest.dmg" className="btn-primary" download>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 1.5v9m0 0L4.5 7M8 10.5L11.5 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/><path d="M2 13.5h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            Verve für macOS herunterladen
+          </a>
+          <a href="features.html" className="btn-ghost">Funktionen ansehen →</a>
+        </div>
+        <div className="hero-dlnote">Für Apple Silicon</div>
+      </div>
+    </section>
+
+    {/* Big screenshot showcase */}
+    <section className="showcase">
+      <div className="showcase-shot">
+        <ScaledMockup route="editor" hideInspector={false} dark={tweaks.theme==='dark'} accent={tweaks.accent} />
+      </div>
+    </section>
+
+    {/* Apple-style cards: each = screenshot + 2-3 lines */}
+    <section className="container">
+      <FeatureCard
+        eyebrow="Editor"
+        title="Schreiben, ohne Ablenkung."
+        sub="Auf der linken Seite steht der Text, sonst nichts. Kein Wortzähler, der dich anstarrt, kein Tagesziel, das dich nervt. Wenn du mehr brauchst, machst du das Inspektor-Panel auf, sonst bleibt es zu."
+        route="editor" hideInspector={false}
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+
+      <FeatureCard
+        eyebrow="Werk-Wissen · Figuren"
+        title="Alle Figuren auf einer Seite."
+        sub="Jede Figur bekommt eine Karte mit dem Wichtigsten: wo sie auftritt, wer mit wem zu tun hat, wie sich der Bogen entwickelt. Im Editor kannst du auf einen Namen klicken und siehst sofort, was du über die Person schon festgelegt hast."
+        route="characters"
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+
+      <FeatureCard
+        eyebrow="Werk-Wissen · Orte"
+        title="Schauplätze, die gleich bleiben."
+        sub="Wie sah dieser Hafen aus, war das Wetter im April warm, lag das Lokal jetzt rechts oder links von der Brücke? Solche Sachen vergisst man beim Weiterschreiben. Verve nicht."
+        route="places"
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+
+      <FeatureCard
+        eyebrow="Wissens-Chat"
+        title="Frage dein eigenes Buch."
+        sub={'Manchmal hängt man stundenlang, weil man eine Stelle nicht wiederfindet. \u201EWo war noch mal die Sache mit dem Brief?\u201C reicht. Du bekommst die Stelle plus die Kapitel, in denen sie auftaucht.'}
+        route="chat"
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+
+      <FeatureCard
+        eyebrow="Konsistenz"
+        title="Was im Lauf der Monate verrutscht."
+        sub="Augenfarbe plötzlich anders, Mantel im Sommer, ein Geburtstag, der nicht stimmt. Verve sammelt sowas in einer Liste, fertig. Du schaust sie an, wenn du Lust hast, und winkst weg, was du absichtlich so geschrieben hast."
+        route="consistency"
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+
+      <FeatureCard
+        eyebrow="Plot-Helfer"
+        title="Beat-Sheets, ohne dich zu gängeln."
+        sub="Wenn du nach Save the Cat oder Heldenreise arbeitest, zeigt dir Verve, wo du im Schema gerade stehst. Du kannst auch dein eigenes Gerüst hinterlegen. Was als Nächstes kommt, schreibst du selber."
+        route="plot"
+        dark={tweaks.theme==='dark'} accent={tweaks.accent}
+      />
+    </section>
+
+    {/* Three-up: Privatsphäre teaser */}
+    <section className="trio container">
+      <a href="ki.html" className="trio-card">
+        <span className="eyebrow">KI</span>
+        <h3>Eine KI, die dein Werk kennt.</h3>
+        <p>Verve hilft beim Erinnern, beim Sortieren und manchmal beim Festsitzen. Welches Modell dafür läuft, suchst du dir selbst aus.</p>
+        <span className="trio-arrow">Mehr lesen →</span>
+      </a>
+      <a href="datenschutz.html" className="trio-card">
+        <span className="eyebrow">Datenschutz</span>
+        <h3>Dein Text bleibt bei dir.</h3>
+        <p>Keine Tracker, keine Konten, keine Pflicht-Cloud. Du kannst Verve auch komplett ohne Internet benutzen.</p>
+        <span className="trio-arrow">Wie das geht →</span>
+      </a>
+      <a href="features.html" className="trio-card">
+        <span className="eyebrow">Funktionen</span>
+        <h3>Mehr als ein Texteditor.</h3>
+        <p>Plot-Gerüst, Figurenkartei, Orte, Recherche, Lektoratslauf. In einer App, ohne dass du was zusammenkleben musst.</p>
+        <span className="trio-arrow">Alles ansehen →</span>
+      </a>
+    </section>
+
+    {/* Download */}
+    <section id="download" className="dl-section">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Verve laden</span>
+        <h2 className="dl-title">Probier es aus.</h2>
+        <p className="dl-sub">Lädst du dir Verve runter, schreibst ein Kapitel und schaust, wie sich das anfühlt. Wenn dir die App nicht passt, ziehst du sie in den Papierkorb. Es gibt kein Konto, das dir danach noch E-Mails schickt.</p>
+        <div className="dl-buttons">
+          <a href="https://vervewriter.de/downloads/Verve-latest.dmg" className="btn-primary" download>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M11.182 0c.06.024.12.048.179.072 1.4.555 2.484 1.535 3.252 2.94.144.264.27.535.378.812.024.06.048.12.072.18-.06.024-.12.048-.18.072a4.55 4.55 0 0 0-2.79 4.176c0 1.296.504 2.448 1.512 3.456.252.252.516.48.792.684-.024.06-.048.12-.072.18-.42.84-.96 1.62-1.62 2.34-.42.456-.864.876-1.332 1.26-.42.348-.876.612-1.368.792-.48.18-.972.252-1.476.216-.48-.036-.948-.144-1.404-.324-.456-.18-.912-.36-1.368-.54-.336-.132-.672-.18-1.008-.144-.336.036-.66.132-.972.288-.456.228-.924.408-1.404.54-.456.132-.924.18-1.404.144a3.42 3.42 0 0 1-1.404-.396 4.55 4.55 0 0 1-1.224-.972C.84 14.928.36 14.292 0 13.572c-.36-.72-.612-1.476-.756-2.268-.144-.792-.18-1.584-.108-2.376.072-.792.252-1.56.54-2.304.288-.744.672-1.428 1.152-2.052.48-.624 1.044-1.164 1.692-1.62.648-.456 1.356-.792 2.124-1.008.768-.216 1.56-.288 2.376-.216.816.072 1.608.288 2.376.648.312.144.612.252.9.324.288.072.576.108.864.108.288 0 .576-.036.864-.108.288-.072.588-.18.9-.324.408-.18.84-.324 1.296-.432.456-.108.924-.144 1.404-.108.48.036.96.144 1.44.324.48.18.948.432 1.404.756.48.336.912.732 1.296 1.188 0 .024-.024.048-.024.072-.96.504-1.776 1.224-2.448 2.16-.672.936-1.008 1.992-1.008 3.168z"/></svg>
+            <span>Verve für macOS herunterladen</span>
+          </a>
+        </div>
+        <div className="dl-meta">
+          <div>Für Apple Silicon</div>
+        </div>
+      </div>
+    </section>
+
+    <SiteFooter />
+
+    <TweaksPanel title="Tweaks">
+      <TweakSection title="Erscheinungsbild">
+        <TweakRadio label="Modus" value={tweaks.theme} options={[{value:"dark",label:"Dunkel"},{value:"light",label:"Hell"}]} onChange={v => setTweak("theme", v)} />
+        <TweakSelect label="Akzentfarbe" value={tweaks.accent} options={Object.entries(ACCENTS_SITE).map(([k,v]) => ({value:k,label:v.name}))} onChange={v => setTweak("accent", v)} />
+      </TweakSection>
+    </TweaksPanel>
+
+    <style>{`
+      .hero { padding: 80px 0 60px; text-align: center; }
+      .hero h1 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: clamp(52px, 8vw, 96px);
+        line-height: 0.98;
+        letter-spacing: -0.045em;
+        margin: 22px 0 28px;
+      }
+      .hero h1 em { font-style: italic; color: var(--accent); }
+      .hero .lede {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: clamp(19px, 2vw, 24px);
+        line-height: 1.5;
+        color: var(--ink-dim);
+        max-width: 60ch;
+        margin: 0 auto 36px;
+      }
+      .hero-cta { display: flex; gap: 12px; justify-content: center; margin-bottom: 18px; flex-wrap: wrap; }
+      .hero-dlnote {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--ink-faint);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .showcase {
+        padding: 30px 0 80px;
+        background: linear-gradient(180deg, transparent, var(--bg-2));
+        border-bottom: 0.5px solid var(--rule);
+      }
+      .showcase-shot {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      .trio {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        padding: 80px 32px;
+      }
+      @media (max-width: 720px) { .trio { grid-template-columns: 1fr; } }
+      .trio-card {
+        padding: 32px 28px;
+        background: var(--surface);
+        border: 0.5px solid var(--rule);
+        border-radius: 16px;
+        display: flex; flex-direction: column; gap: 12px;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+      .trio-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+      .trio-card h3 {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        margin: 4px 0 0;
+      }
+      .trio-card p { font-size: 14px; color: var(--ink-dim); line-height: 1.5; flex: 1; }
+      .trio-arrow { color: var(--accent); font-size: 13px; font-weight: 500; margin-top: 8px; }
+
+      .dl-section {
+        padding: 100px 0 80px;
+        text-align: center;
+        border-top: 0.5px solid var(--rule);
+      }
+      .dl-title {
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: clamp(40px, 6vw, 68px);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin: 18px 0 18px;
+      }
+      .dl-sub {
+        font-family: var(--serif);
+        font-weight: 300;
+        font-size: 19px;
+        color: var(--ink-dim);
+        max-width: 56ch;
+        margin: 0 auto 36px;
+        line-height: 1.5;
+      }
+      .dl-buttons { display: flex; gap: 12px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+      .dl-meta {
+        display: flex; justify-content: center; gap: 20px;
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--ink-faint);
+        letter-spacing: 0.04em;
+        flex-wrap: wrap;
+      }
+      .dl-meta code { background: var(--surface-2); padding: 2px 6px; border-radius: 3px; }
+    `}</style>
+  </>);
+}
+
+// Render a mockup that scales to fit the showcase container
+function ScaledMockup({ route, hideInspector, dark, accent }) {
+  const wrapRef = React.useRef(null);
+  const [scale, setScale] = React.useState(1);
+  React.useEffect(() => {
+    function update() {
+      const el = wrapRef.current; if (!el) return;
+      setScale(Math.min(1, (el.clientWidth - 32) / 1280));
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return (
+    <div ref={wrapRef} style={{padding: "0 16px"}}>
+      <div style={{transform: `scale(${scale})`, height: 800 * scale, transformOrigin: "top center", width: 1280, margin: "0 auto"}}>
+        <VerveApp route={route} hideInspector={hideInspector} dark={dark} accent={accent} />
+      </div>
+    </div>
+  );
+}
+
+window.ScaledMockup = ScaledMockup;
+function waitAndMount() {
+  if (!window.VerveApp || !window.SiteNav || !window.RoutePlot || !window.useTweaks) {
+    return setTimeout(waitAndMount, 30);
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<IndexPage />);
+}
+waitAndMount();
+</script>
+</body>
+</html>

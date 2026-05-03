@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Verve · Impressum</title>
+<link rel="stylesheet" href="styles/site.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/chrome.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{"theme":"dark","accent":"bordeaux"}/*EDITMODE-END*/;
+
+function ImpressumPage() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTheme(tweaks); }, [tweaks]);
+  return (<>
+    <SiteNav active="impressum.html" />
+    <main className="imp-main">
+      <div className="container-narrow">
+        <h1>Impressum</h1>
+
+        <section>
+          <h2>Angaben gemäß § 5 TMG</h2>
+          <h3>Herausgeber</h3>
+          <address>
+            Janik Hartmann<br/>
+            c/o IP-Management #7612<br/>
+            Ludwig-Erhard-Straße 18<br/>
+            20459 Hamburg<br/>
+            Deutschland
+          </address>
+        </section>
+
+        <section>
+          <h2>Kontakt</h2>
+          <table>
+            <tbody>
+              <tr><td>E-Mail</td><td><a href="mailto:buch@starfire-akademie.de">buch@starfire-akademie.de</a></td></tr>
+              <tr><td>Telefon</td><td><a href="tel:+4936625793851">036625 793851</a></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Verantwortlich für den Inhalt</h2>
+          <p>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</p>
+          <address>
+            Janik Hartmann<br/>
+            c/o IP-Management #7612<br/>
+            Ludwig-Erhard-Straße 18<br/>
+            20459 Hamburg
+          </address>
+        </section>
+
+        <section>
+          <h2>Haftungsausschluss</h2>
+          <h3>Haftung für Inhalte</h3>
+          <p>Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.</p>
+          <h3>Haftung für Links</h3>
+          <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
+        </section>
+      </div>
+    </main>
+    <SiteFooter />
+    <style>{`
+      .imp-main {
+        padding: 80px 0 120px;
+        min-height: 60vh;
+      }
+      .imp-main h1 {
+        font-family: var(--serif);
+        font-size: clamp(40px, 5vw, 64px);
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        margin-bottom: 64px;
+        padding-bottom: 28px;
+        border-bottom: 0.5px solid var(--rule);
+      }
+      .imp-main section {
+        padding-bottom: 40px;
+        margin-bottom: 40px;
+        border-bottom: 0.5px solid var(--rule);
+      }
+      .imp-main section:last-child { border-bottom: 0; }
+      .imp-main h2 {
+        font-family: var(--serif);
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: -0.01em;
+        margin-bottom: 16px;
+        color: var(--ink);
+      }
+      .imp-main h3 {
+        font-family: var(--sans);
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin: 20px 0 8px;
+      }
+      .imp-main address, .imp-main p {
+        font-family: var(--serif);
+        font-size: 17px;
+        font-style: normal;
+        line-height: 1.7;
+        color: var(--ink-dim);
+        max-width: 60ch;
+      }
+      .imp-main table {
+        border-collapse: collapse;
+        font-family: var(--serif);
+        font-size: 17px;
+        color: var(--ink-dim);
+      }
+      .imp-main td { padding: 6px 32px 6px 0; vertical-align: top; }
+      .imp-main td:first-child {
+        font-family: var(--mono);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--ink-faint);
+        padding-top: 8px;
+        white-space: nowrap;
+      }
+      .imp-main a { color: var(--accent); }
+      .imp-main a:hover { text-decoration: underline; }
+    `}</style>
+  </>);
+}
+
+function waitAndMount() {
+  if (!window.SiteNav || !window.SiteFooter || !window.useTweaks) {
+    return setTimeout(waitAndMount, 30);
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<ImpressumPage />);
+}
+waitAndMount();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Verve · Funktionen</title>
+<link rel="stylesheet" href="styles/site.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="src/chrome.jsx"></script>
+<script type="text/babel" src="src/mockup-shell.jsx"></script>
+<script type="text/babel" src="src/mockup-routes.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-2.jsx"></script>
+<script type="text/babel" src="src/mockup-routes-3.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "theme": "dark",
+  "accent": "bordeaux"
+}/*EDITMODE-END*/;
+
+function FeaturesPage() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTheme(tweaks); }, [tweaks]);
+  const dark = tweaks.theme === "dark";
+  const accent = tweaks.accent;
+
+  return (<>
+    <SiteNav active="features.html" />
+
+    <section className="page-hero">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Funktionen</span>
+        <h1>Eine Werkstatt,<br/><em>kein</em> Texteditor.</h1>
+        <p className="lede">Verve hält dein Werk zusammen — von der ersten Notiz bis zum Lektorat. Jede Funktion ist still, lokal und respektiert deinen Text.</p>
+      </div>
+    </section>
+
+    {/* Section: Schreiben */}
+    <SectionDivider eyebrow="Schreiben" title="Die Werkstatt." />
+
+    <div className="container">
+      <FeatureCard
+        eyebrow="Editor · Fokus-Modus"
+        title="Eine Schreibfläche, die nichts will."
+        sub="Kein Wortzähler, der dich anstarrt. Kein Statusbalken, der dich ablenkt. Eine Seite, ein Cursor, dein Text. Und im Hintergrund — Verve, der weiß, wer Aleksander ist und wo Salzwacht liegt."
+        route="editor"
+        hideInspector={false}
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Werk-Übersicht"
+        title="Dein Werk auf einen Blick."
+        sub="Wo stehe ich heute, wo war ich vor zwei Wochen, wie viele Wörter hat Buch II? Eine ruhige Übersicht — keine Dashboards, keine Diagramme, die wichtiger erscheinen wollen als deine Sätze."
+        route="dashboard"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Bibliothek"
+        title="Alle Werke. Eine Werkstatt."
+        sub="Reihen, Einzelromane, Kurzgeschichten, Sachbuch. Fünf Vorlagen für den Anfang, ein Autor-Profil und ein Stilguide, die werkübergreifend gelten — und ein Wissens-Chat, der über alle Werke hinweg antwortet."
+        route="library"
+        dark={dark} accent={accent}
+      />
+    </div>
+
+    {/* Section: Werk-Wissen */}
+    <SectionDivider eyebrow="Werk-Wissen" title="Was Verve sich merkt." />
+
+    <div className="container">
+      <FeatureCard
+        eyebrow="Figuren"
+        title={<>Siebzehn Menschen.<br/>Eine Übersicht.</>}
+        sub="Jede Figur als Karteikarte mit Auftritten, Beziehungen und Bogen. Verve liest mit — wenn du einen Namen schreibst, weiß sie schon, wer es ist, was er trägt und wann er zuletzt aufgetreten ist."
+        route="characters"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Orte"
+        title="Schauplätze, die mitschreiben."
+        sub="Salzwacht in Kapitel 2 ist Salzwacht in Kapitel 11. Verve erinnert sich an Geographie, Atmosphäre, Stimmung — und hält Widersprüche fest, bevor sie wachsen."
+        route="places"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Magie & Lore"
+        title="Regeln, die nicht brechen."
+        sub="Hard Magic, Soft Magic, oder einfach: deine Welt-Logik. Verve speichert Regeln und meldet sich, wenn ein Kapitel sie ignoriert."
+        route="magic"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Fraktionen, Gruppen & Räte"
+        title="Wer steht wo. Und wer mit wem."
+        sub="Die Vogelbahn schmuggelt — aber wer ist Mitglied, wer ist nur Sympathisant? Verve hält Fraktionen, ihre Mitglieder und Beziehungen sortiert."
+        route="factions"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Ideen & Konzepte"
+        title="Politik, Religion, Philosophie."
+        sub="Wirtschaftssysteme, Glaubensrichtungen, gesellschaftliche Strömungen. Alles, was nicht greifbar ist, aber dein Werk trägt — als eigene Kategorien in der Welt-Bibliothek."
+        route="concepts"
+        dark={dark} accent={accent}
+      />
+    </div>
+
+    {/* Section: Werkzeuge */}
+    <SectionDivider eyebrow="Werkzeuge" title="Stille Helfer." />
+
+    <div className="container">
+      <FeatureCard
+        eyebrow="Konsistenz-Check"
+        title="Drei Augen, die mitlesen."
+        sub="Augenfarbe in Kapitel 3, Mantel in Kapitel 7, Datum in Kapitel 11 — Verve merkt es. Kein Pop-up, kein Alarm. Eine Liste, die du durchgehen kannst, wenn du willst."
+        route="consistency"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Wissens-Chat"
+        title="Frage dein eigenes Buch."
+        sub={'\u201EWer hat den Brief geschrieben — und gibt es Hinweise vorher?\u201C Verve antwortet aus deinem Werk, mit Belegen aus den Kapiteln. Niemals halluziniert, immer zitiert.'}
+        route="chat"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Plot-Helfer"
+        title="Beat-Sheets, die deinen Rhythmus kennen."
+        sub="Save the Cat!, Heldenreise, Drei-Akt, oder dein eigenes Schema. Verve zeigt, wo du stehst — nicht, was du schreiben sollst."
+        route="plot"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Plot-Matrix"
+        title="Alle Erzählstränge auf einer Seite."
+        sub="Hauptplot, B-Story, Backstory, Politik. Verve zeigt dir in einem Raster, welcher Strang in welchem Kapitel trägt — und wo etwas zu lange ruht. Erkenne Rhythmus-Probleme, bevor sie zu Lektor-Notizen werden."
+        route="plot-matrix"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Kapitelplanung"
+        title="Vom Gerüst zum Manuskript."
+        sub="Kapitel anlegen, per Drag sortieren, mit Synopsis und Beat versehen. Wortziele pro Kapitel, Status auf einen Blick — fertig, in Arbeit, geplant, Skizze. Du siehst, wo dein Buch steht, ohne eine Tabelle zu öffnen."
+        route="chapter-plan"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Kapitelkontext"
+        title="Was Verve gerade weiß."
+        sub="Während du schreibst, zeigt dir Verve in einer ruhigen Spalte, wer gerade im Kapitel ist, wo wir im Plot stehen, was vorher passiert ist — und worauf du achten solltest. Kein Recherchieren, kein Tab-Wechsel."
+        route="chapter-context"
+        dark={dark} accent={accent}
+      />
+
+      <FeatureCard
+        eyebrow="Inbox"
+        title="Einfälle, die nicht verloren gehen."
+        sub="Sprachmemo unterwegs, eine Zeile am Frühstückstisch, ein Web-Clip aus einem Recherche-Artikel. Alles landet in der Inbox — die KI sortiert leise vor, du entscheidest, wohin es gehört."
+        route="inbox"
+        dark={dark} accent={accent}
+      />
+    </div>
+
+    {/* Bottom CTA */}
+    <section className="dl-section">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">Verve laden</span>
+        <h2 className="dl-title">Eine ruhige App<br/>für lange Texte.</h2>
+        <p className="dl-sub">Lade sie, schreibe ein Kapitel, lösche sie wieder — niemand wird benachrichtigt.</p>
+        <div className="dl-buttons">
+          <a href="index.html#download" className="btn-primary">Verve laden · macOS</a>
+          <a href="ki.html" className="btn-ghost">KI-Schicht ansehen →</a>
+        </div>
+      </div>
+    </section>
+
+    <SiteFooter />
+
+    <TweaksPanel title="Tweaks">
+      <TweakSection title="Erscheinungsbild">
+        <TweakRadio label="Modus" value={tweaks.theme} options={[{value:"dark",label:"Dunkel"},{value:"light",label:"Hell"}]} onChange={v => setTweak("theme", v)} />
+        <TweakSelect label="Akzentfarbe" value={tweaks.accent} options={Object.entries(ACCENTS_SITE).map(([k,v]) => ({value:k,label:v.name}))} onChange={v => setTweak("accent", v)} />
+      </TweakSection>
+    </TweaksPanel>
+
+    <style>{`
+      .dl-section { padding: 100px 0 80px; text-align: center; border-top: 0.5px solid var(--rule); }
+      .dl-title { font-family: var(--serif); font-weight: 500; font-size: clamp(40px, 6vw, 68px); line-height: 1.05; letter-spacing: -0.03em; margin: 18px 0; }
+      .dl-sub { font-family: var(--serif); font-weight: 300; font-size: 19px; color: var(--ink-dim); max-width: 56ch; margin: 0 auto 36px; line-height: 1.5; }
+      .dl-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    `}</style>
+  </>);
+}
+
+function SectionDivider({ eyebrow, title }) {
+  return (
+    <section className="sect-div">
+      <div className="container-narrow">
+        <span className="eyebrow eyebrow-line">{eyebrow}</span>
+        <h2>{title}</h2>
+      </div>
+      <style>{`
+        .sect-div { padding: 100px 0 24px; text-align: center; }
+        .sect-div h2 {
+          font-family: var(--serif);
+          font-weight: 500;
+          font-size: clamp(40px, 6vw, 64px);
+          line-height: 1.0;
+          letter-spacing: -0.03em;
+          margin-top: 18px;
+        }
+      `}</style>
+    </section>
+  );
+}
+
+// Override FeatureCard to allow innerHTML title (for line breaks)
+function FeatureCard2(props) {
+  return <FeatureCard {...props} title={<span dangerouslySetInnerHTML={{__html: props.title}}/>} />;
+}
+window.FeatureCard2 = FeatureCard2;
+
+function waitAndMount() {
+  if (!window.VerveApp || !window.SiteNav || !window.RoutePlot || !window.useTweaks || !window.FeatureCard) {
+    return setTimeout(waitAndMount, 30);
+  }
+  ReactDOM.createRoot(document.getElementById("root")).render(<FeaturesPage />);
+}
+waitAndMount();
+</script>
+</body>
+</html>
